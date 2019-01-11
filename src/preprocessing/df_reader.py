@@ -1,9 +1,13 @@
 import pandas as pd
 import os
-
+import io
 
 class DataFrameLoader():
+
     def __init__(self, data_dir, output=None, select=None):
+        self.data_dir = data_dir
+        self.output = output
+        self.select = select
 
         input_file = os.path.join(data_dir)
 
@@ -18,6 +22,20 @@ class DataFrameLoader():
 
         if output:
             self.save(output, self.df)
+
+    def __repr__(self):
+        return f"DataFrameLoader('{self.data_dir}', 'output={self.output}', select='{self.select}')"
+
+    def __str__(self):
+        buf = io.StringIO()
+        df_info = self.df.info(buf=buf)
+        s = buf.getvalue()
+        message = (
+            f'{s}'
+            f'\n'
+            f'{self.df.head().to_string()}'
+        )
+        return message
 
     def select_parser(self, select):
         return [ i for i in select.split(' ') if i != '']

@@ -4,7 +4,6 @@ import textwrap
 
 from txt_reader import TextLoader
 
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_dir', type=str,
